@@ -57,12 +57,16 @@ const board = new five.Board({
             LCD.cursor(1,0);
             
         })
-
+        let timerStarted = false;
         client.on('showTime', (data) => {
-            LCD.cursor(0,0).clear()
-            LCD.cursor(0,0).print(`:clock: ${data.now}`)
-            LCD.cursor(1,0).print(`Dato: ${data.date}`);
-            LCD.cursor(1,15); 
+            if(timerStarted){
+                LCD.cursor(0,0).print(`:clock: ${data.now}`)
+                LCD.cursor(1,0).print(`Dato: ${data.date}`);
+                LCD.cursor(1,15); 
+            }else{
+                timerStarted = true;
+                LCD.clear()
+            }
         })
 
   })
