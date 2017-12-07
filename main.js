@@ -10,13 +10,13 @@ const board = new five.Board({
 //new five.Board({port : 'COM7', repl: false});
 const SerialPort = require("serialport");
 const five = require("johnny-five");
-const board_Two = new five.Board({
+/* const board_Two = new five.Board({
   id : "B",
-  port: new SerialPort("COM8", {
+  port: new SerialPort("COM", {
     baudRate: 115200
   }),
   repl: false
-});
+}); */
 const board = new five.Board({
   id : "A",
   port: new SerialPort("COM7", {
@@ -25,14 +25,14 @@ const board = new five.Board({
   repl: false
 });
 
-
+  
 const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3333;
 const LEDS = [2,4,5,6,7];
 const RGBLED  = [11,9,10];
 const BTN_PIN = 12;
@@ -55,7 +55,7 @@ let state = {
 
 io.on('connection', function(client) {
 
-    board_Two.on('ready', () => {
+    /* board_Two.on('ready', () => {
       console.log('Board 2 klar!', board_Two.id);
       
   
@@ -63,7 +63,7 @@ io.on('connection', function(client) {
       //B2_LED.on();
   
     
-    })
+    }) */
 
   board.on('ready', function() {
     console.log('Arduino is ready.', board.id);
@@ -154,7 +154,7 @@ io.on('connection', function(client) {
 
 
 
-    client.on('showStart', (data) => {
+    /* client.on('showStart', (data) => {
       setTimeout(function(){
         data.forEach((arr, index) => {
             arr.forEach( (ledOnOff, insIdx) => {
@@ -176,7 +176,7 @@ io.on('connection', function(client) {
         })
 
     }, 1000);
-    })
+    }) */
 
 
    
@@ -223,17 +223,17 @@ io.on('connection', function(client) {
 
     
     
-    board_Two.on('ready', () => {
+    /* board_Two.on('ready', () => {
       let LED_CHANGE_STATE = false;
       let BTN_LED_START = new five.Button({ pin: 3, board: board_Two });
       let BTN_LED_TOGGLE = new five.Button({ pin: 2, board: board_Two });
      
-    /*   BTN_LED_START.on('press', () => {
+      BTN_LED_START.on('press', () => {
         console.log('BTN  pressed');
       })
       BTN_LED_TOGGLE.on('press', () => {
         console.log('BTN toggle pressed');
-      }); */
+      });
 
        BTN_LED_START.on('press', () => {
          if(!LED_CHANGE_STATE){
@@ -258,9 +258,9 @@ io.on('connection', function(client) {
          })
    
        })
-
+ 
       
-    });
+    });*/
 
     
 

@@ -1,5 +1,5 @@
 (function() {
-    var socket = io.connect(window.location.hostname + ':' + 3000);
+    var socket = io.connect(window.location.hostname + ':' + 3333);
     var red = document.getElementById('red');
     var green = document.getElementById('green');
     var blue = document.getElementById('blue');
