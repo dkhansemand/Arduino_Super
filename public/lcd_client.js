@@ -33,4 +33,8 @@
         }
     })
 
+    document.getElementById('btnOSInfo').addEventListener('click', () => {
+        socket.emit('osInfo');
+    })
+
 }());

@@ -1,5 +1,7 @@
+function formatBytes(a,b){if(0==a)return"0 Bytes";var c=1024,d=b||2,e=["Bytes","KB","MB","GB","TB","PB","EB","ZB","YB"],f=Math.floor(Math.log(a)/Math.log(c));return parseFloat((a/Math.pow(c,f)).toFixed(d))+" "+e[f]}
 const SerialPort = require("serialport");
 const five = require("johnny-five");
+const os = require('os');
 const board = new five.Board({
     id : "A",
     port: new SerialPort("COM7", {
@@ -67,6 +69,19 @@ const board = new five.Board({
                 timerStarted = true;
                 LCD.clear()
             }
+        })
+
+        let osInfoToggle = false;
+        client.on('osInfo', () => {
+            LCD.clear();
+            LCD.cursor(0,0).print(`RAM usage:`);
+            LCD.cursor(1,0).print(`${formatBytes(os.freemem())}/${formatBytes(os.totalmem())}`)
+            setTimeout(() => {
+                 LCD.clear() 
+                 LCD.cursor(0,0).print(`User logged in:`)
+                 LCD.cursor(1,0).print(`${os.userInfo().username}`)
+            }, 4000)
+            //console.log('user info: ', os.userInfo().username)
         })
 
   })
